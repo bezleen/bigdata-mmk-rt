@@ -2,6 +2,8 @@ from flask_socketio import Namespace
 from flask_socketio import join_room, leave_room, rooms
 from flask import request
 import pydash as py_
+import src.controllers as Controller
+
 
 
 class MMK(Namespace):
@@ -15,3 +17,7 @@ class MMK(Namespace):
     
     def on_find(self, *args, **kwargs):
         sid = request.sid
+        args = args[0]
+        user_id = py_.get(args, "user_id")
+        Controller.MMK.find_match(user_id)
+        return
