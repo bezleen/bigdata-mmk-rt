@@ -32,7 +32,7 @@ def configure_app(app):
 
 def configure_extensions(app):
     socketio.init_app(app, allow_upgrades=True)
-    mdb.init_app(app)
+    mdb.init_app(app, directConnection=True)
     # logging
     # logging.config.dictConfig(LoggingConfig.LOGGING_CONFIG)
     return

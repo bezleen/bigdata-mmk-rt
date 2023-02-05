@@ -15,4 +15,4 @@ services:
     env_file:
       - .env
     # command: supervisord -n -c /etc/supervisor.d/supervisord.conf
-    command: tail -f /dev/null
+    # command: tail -f /dev/null

@@ -13,7 +13,7 @@ Jinja2==3.1.2
 joblib==1.2.0
 kafka-python==2.0.2
 MarkupSafe==2.1.2
-numpy==1.24.1
+# numpy==1.24.1
 pickle-mixin==1.0.2
 pycodestyle==2.10.0
 pydash==5.1.2
@@ -21,8 +21,7 @@ pymongo==4.1.1
 python-dotenv==0.20.0
 python-engineio==4.3.4
 python-socketio==5.7.2
-scikit-learn==1.2.0
-scipy==1.10.0
+# scipy==1.10.0
 threadpoolctl==3.1.0
 tomli==2.0.1
 uWSGI==2.0.21

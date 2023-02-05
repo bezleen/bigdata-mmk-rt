@@ -112,9 +112,9 @@ class MMK(object):
             "headshot_rate": headshot_rate
         }
         print(record)
-        self.kafka_producer.send(Consts.TOPIC_FIND, value=record)
-        # self.kafka_producer.send(Consts.TOPIC_PENDING, value=record)
         py_.set_(self.dict_findings, user_id, 1)
         # emit
         socketio.emit("finding", {"user_id": user_id, "status": "finding", "req_id": sid}, namespace=self.namespace, to=user_id)
+        self.kafka_producer.send(Consts.TOPIC_FIND, value=record)
+        # self.kafka_producer.send(Consts.TOPIC_PENDING, value=record)
         return

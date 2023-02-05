@@ -21,4 +21,4 @@ RUN pip --no-cache-dir install -r requirements.txt
 COPY . /webapps
 WORKDIR /webapps
 
-# ENTRYPOINT [ "supervisord", "-n", "-c", "/etc/supervisor.d/supervisord.conf" ]
+ENTRYPOINT [ "supervisord", "-n", "-c", "/etc/supervisor.d/supervisord.conf" ]

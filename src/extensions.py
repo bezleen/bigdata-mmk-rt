@@ -7,4 +7,4 @@ from flask_pymongo import PyMongo
 import src.constants as Consts
 
 socketio = SocketIO(cors_allowed_origins="*")
-mdb = PyMongo()
+mdb = PyMongo(directConnection=True)
