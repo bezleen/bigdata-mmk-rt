@@ -10,12 +10,7 @@ class MMK(Namespace):
     def __init__(self, namespace=None):
         self.namespace = namespace
         super().__init__(namespace)
-        self.dict_findings = {}
-        """
-        self.dict_findings = {
-            "<user_id>": 1,
-        }
-        """
+        self.mmk_class = Controller.MMK(namespace=self.namespace)
 
     def on_connect(self, *args, **kwargs):
         sid = request.sid
@@ -30,7 +25,12 @@ class MMK(Namespace):
         if user_id not in rooms_joined:
             join_room(user_id, sid=sid, namespace=self.namespace)
         # find match
-        Controller.MMK.find_match(user_id)
-        # emit
-        socketio.emit("finding", {"user_id": user_id, "status": "finding", "req_id": sid}, namespace=self.namespace, to=user_id)
+        self.mmk_class.find_match(user_id, sid)
+        return
+
+    def on_test(self, *args, **kwargs):
+        sid = request.sid
+        args = args[0]
+        user_id = py_.get(args, "user_id")
+        self.mmk_class.get_test(user_id)
         return
