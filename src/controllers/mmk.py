@@ -1,4 +1,5 @@
 import json
+import uuid
 
 
 import pydash as py_
@@ -52,20 +53,21 @@ class MMK(object):
             message_data = message.value
             self.test.append(message_data)
             # TODO: get tier and user_id from message_data
-            tier = ""
-            user_id = ""
+            tier = py_.get(message_data, "tier")
+            user_id = py_.get(message_data, "user_id")
             # handle the tier
             if not py_.get(self.pending, tier):
                 py_.set_(self.pending, tier, [user_id])
                 continue
             self.pending[tier].append(user_id)
-            if self.pending[tier] < self.total_number_of_player_in_match:
+            if len(self.pending[tier]) < self.total_number_of_player_in_match:
                 continue
             match_users = self.pending[tier][:self.total_number_of_player_in_match]
             self.pending[tier] = self.pending[tier][self.total_number_of_player_in_match:]
             self.found_match(match_users)
 
     def found_match(self, user_ids):
+        match_id = uuid.uuid4().hex
         dict_team = {}
         team_size = len(user_ids) // self.number_of_team_in_match
         for team_index in range(1, self.number_of_team_in_match + 1):
@@ -76,7 +78,7 @@ class MMK(object):
             }
             dict_team.update(team_data)
         for user_id in user_ids:
-            socketio.emit("found_match", {"user_id": user_id, "dict_team": dict_team}, namespace=self.namespace, to=user_id)
+            socketio.emit("found_match", {"match_id": match_id, "dict_team": dict_team}, namespace=self.namespace, to=user_id)
         return
 
     def find_match(self, user_id, sid):
@@ -110,8 +112,8 @@ class MMK(object):
             "headshot_rate": headshot_rate
         }
         print(record)
-        # self.kafka_producer.send(Consts.TOPIC_FIND, value=record)
-        self.kafka_producer.send(Consts.TOPIC_PENDING, value=record)
+        self.kafka_producer.send(Consts.TOPIC_FIND, value=record)
+        # self.kafka_producer.send(Consts.TOPIC_PENDING, value=record)
         py_.set_(self.dict_findings, user_id, 1)
         # emit
         socketio.emit("finding", {"user_id": user_id, "status": "finding", "req_id": sid}, namespace=self.namespace, to=user_id)

@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  app:
+    container_name: bigdata-mmk-rt
+    build: .
+    restart: on-failure
+    volumes:
+      - ./:/webapps
+      - ./log:/var/log/apps
+    ports:
+      - 7012:5000
+    environment:
+      - PYTHONUNBUFFERED=true
+    env_file:
+      - .env
+    # command: supervisord -n -c /etc/supervisor.d/supervisord.conf
+    command: tail -f /dev/null

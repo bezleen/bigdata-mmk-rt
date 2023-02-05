@@ -5,3 +5,4 @@ __pycache__
 *.log
 supervisord.pid
 # *.csv
+/log
