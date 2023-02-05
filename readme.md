@@ -23,5 +23,9 @@ docker-compose up -d --build
 ```
 # 3. run model server
 ```
+cd spark_streaming
+virtualenv venv -p python3.7
+source venv/bin/activate
+pip install -r requirements.txt
 spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8-assembly_2.11:2.4.3 handle_finding_match3.py
 ```
