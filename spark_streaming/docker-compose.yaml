@@ -1,0 +1,6 @@
+version: '3'
+services:
+  spark:
+    build: .
+    image: spark-streaming-kafka
+    container_name: spark-streaming-kafka

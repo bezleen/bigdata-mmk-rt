@@ -22,3 +22,6 @@ cd ..
 docker-compose up -d --build
 ```
 # 3. run model server
+```
+spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8-assembly_2.11:2.4.3 handle_finding_match3.py
+```
