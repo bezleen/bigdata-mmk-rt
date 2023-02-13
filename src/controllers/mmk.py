@@ -12,6 +12,7 @@ import src.constants as Consts
 from flask_socketio import emit, join_room, disconnect
 from src.extensions import socketio
 from kafka import KafkaConsumer, KafkaProducer
+import time
 
 
 class MMK(object):
@@ -19,7 +20,7 @@ class MMK(object):
         self.namespace = namespace
         self.total_number_of_player_in_match = total_number_of_player_in_match
         self.number_of_team_in_match = number_of_team_in_match
-        self.kafka_producer = KafkaProducer(bootstrap_servers=Consts.KAFKA_SERVER, value_serializer=lambda x: json.dumps(x).encode('utf-8'))
+        # self.kafka_producer = KafkaProducer(bootstrap_servers=Consts.KAFKA_SERVER, value_serializer=lambda x: json.dumps(x).encode('utf-8'))
         self.dict_findings = {}
         """
         self.dict_findings = {
@@ -41,6 +42,7 @@ class MMK(object):
         return
 
     def listen_kafka(self):
+        return
         self.kafka_consumer_pending = KafkaConsumer(
             Consts.TOPIC_PENDING,
             bootstrap_servers=[Consts.KAFKA_SERVER],
@@ -65,6 +67,17 @@ class MMK(object):
             match_users = self.pending[tier][:self.total_number_of_player_in_match]
             self.pending[tier] = self.pending[tier][self.total_number_of_player_in_match:]
             self.found_match(match_users)
+
+    def find_match_demo(self, user_id, sid):
+        socketio.emit("finding", {"user_id": user_id, "status": "finding", "req_id": sid}, namespace=self.namespace, to=user_id)
+        time.sleep(3)
+        match_id = uuid.uuid4().hex
+        dict_team = {
+            "team_1": ["637f511a388719867cbf2721", "637f518c938013fd193f8620", "637f51df388719867cbf273b", "637f53b1fcf69d51dd88c9f0"],
+            "team_2": ["637f557e529b17316f8a7512", "637f599e388719867cbf2771", user_id, "638025ecdbefe3eb478e4904"]
+        }
+        socketio.emit("found_match", {"match_id": match_id, "dict_team": dict_team}, namespace=self.namespace, to=user_id)
+        return
 
     def found_match(self, user_ids):
         match_id = uuid.uuid4().hex
