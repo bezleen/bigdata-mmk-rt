@@ -25,7 +25,8 @@ class MMK(Namespace):
         if user_id not in rooms_joined:
             join_room(user_id, sid=sid, namespace=self.namespace)
         # find match
-        self.mmk_class.find_match(user_id, sid)
+        self.mmk_class.find_match_demo(user_id, sid)
+        # self.mmk_class.find_match(user_id, sid)
         return
 
     def on_test(self, *args, **kwargs):
