@@ -73,8 +73,42 @@ class MMK(object):
         time.sleep(3)
         match_id = uuid.uuid4().hex
         dict_team = {
-            "team_1": ["637f511a388719867cbf2721", "637f518c938013fd193f8620", "637f51df388719867cbf273b", "637f53b1fcf69d51dd88c9f0"],
-            "team_2": ["637f557e529b17316f8a7512", "637f599e388719867cbf2771", user_id, "638025ecdbefe3eb478e4904"]
+            "team_1": [
+                {
+                    "user_id": "637f511a388719867cbf2721",
+                    "display_name": "hien"
+                },
+                {
+                    "user_id": "637f518c938013fd193f8620",
+                    "display_name": "quang"
+                },
+                {
+                    "user_id": "637f51df388719867cbf273b",
+                    "display_name": "man"
+                },
+                {
+                    "user_id": "637f53b1fcf69d51dd88c9f0",
+                    "display_name": "nhan"
+                }
+            ],
+            "team_2": [
+                {
+                    "user_id": "637f557e529b17316f8a7512",
+                    "display_name": "hien2"
+                },
+                {
+                    "user_id": "637f599e388719867cbf2771",
+                    "display_name": "quang2"
+                },
+                {
+                    "user_id": "47",
+                    "display_name": "man2"
+                },
+                {
+                    "user_id": "638025ecdbefe3eb478e4904",
+                    "display_name": "nhan2"
+                }
+            ]
         }
         socketio.emit("found_match", {"match_id": match_id, "dict_team": dict_team}, namespace=self.namespace, to=user_id)
         return
