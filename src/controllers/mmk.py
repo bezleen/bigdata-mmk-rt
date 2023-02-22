@@ -15,7 +15,7 @@ from kafka import KafkaConsumer, KafkaProducer
 
 
 class MMK(object):
-    def __init__(self, total_number_of_player_in_match=10, number_of_team_in_match=2, namespace=None):
+    def __init__(self, total_number_of_player_in_match=8, number_of_team_in_match=2, namespace=None):
         self.namespace = namespace
         self.total_number_of_player_in_match = total_number_of_player_in_match
         self.number_of_team_in_match = number_of_team_in_match
@@ -54,6 +54,7 @@ class MMK(object):
             self.test.append(message_data)
             # TODO: get tier and user_id from message_data
             tier = py_.get(message_data, "tier")
+            tier = "1"
             user_id = py_.get(message_data, "user_id")
             # handle the tier
             if not py_.get(self.pending, tier):
